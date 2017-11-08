@@ -5,6 +5,7 @@ import pickle
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from lesson_functions import *
+from scipy.ndimage.measurements import label
 
 dist_pickle = pickle.load( open("svc_pickle.p", "rb" ) )
 svc = dist_pickle["svc"]
@@ -42,9 +43,32 @@ class Pipeline():
         ystop = 656
         scale = 1.5
 
-        out_img = find_cars(self.image, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins)
+        out_img, img_boxes = find_cars(self.image, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins)
 
-        return out_img
+        heat = np.zeros_like(self.image[:,:,0]).astype(np.float)
+        heat = add_heat(heat, img_boxes)
+
+        # Apply threshold to help remove false positives
+        heat = apply_threshold(heat,1)
+
+        # Visualize the heatmap when displaying
+        heatmap = np.clip(heat, 0, 255)
+
+        # Find final boxes from heatmap using label function
+        labels = label(heatmap)
+        draw_img = draw_labeled_bboxes(np.copy(self.image), labels)
+
+        fig = plt.figure()
+        plt.subplot(121)
+        plt.imshow(draw_img)
+        plt.title('Car Positions')
+        plt.subplot(122)
+        plt.imshow(heatmap, cmap='hot')
+        plt.title('Heat Map')
+        plt.savefig("./output_images/plot.jpg")
+        fig.tight_layout()
+
+        return draw_img
 
 class ProcessImages():
     def run_pipeline(self, image, save_image=False):
