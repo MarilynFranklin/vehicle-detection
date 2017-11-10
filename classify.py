@@ -27,8 +27,8 @@ print("length noncars:", len(notcars))
 # The quiz evaluator times out after 13s of CPU time
 sample_size = 1000
 random_idxs = np.random.randint(0, len(cars), sample_size)
-cars = np.array(cars)[random_idxs] # cars[0:sample_size]
-notcars = np.array(notcars)[random_idxs] # notcars[0:sample_size]
+# cars = np.array(cars)[random_idxs] # cars[0:sample_size]
+# notcars = np.array(notcars)[random_idxs] # notcars[0:sample_size]
 
 ### TODO: Tweak these parameters and see how the results change.
 color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
