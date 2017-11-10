@@ -177,7 +177,7 @@ def add_heat(heatmap, bbox_list):
 
     # Return updated heatmap
     return heatmap# Iterate through list of bboxes
-    
+
 def apply_threshold(heatmap, threshold):
     # Zero out pixels below the threshold
     heatmap[heatmap <= threshold] = 0
