@@ -6,6 +6,7 @@ import glob
 import time
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
+from sklearn.calibration import CalibratedClassifierCV
 from skimage.feature import hog
 from lesson_functions import *
 import pickle
@@ -76,18 +77,19 @@ print('Using:',orient,'orientations',pix_per_cell,
 print('Feature vector length:', len(X_train[0]))
 # Use a linear SVC 
 svc = LinearSVC()
+clf = CalibratedClassifierCV(svc)
 # Check the training time for the SVC
 t=time.time()
-svc.fit(X_train, y_train)
+clf.fit(X_train, y_train)
 t2 = time.time()
 print(round(t2-t, 2), 'Seconds to train SVC...')
 # Check the score of the SVC
-print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
+print('Test Accuracy of SVC = ', round(clf.score(X_test, y_test), 4))
 # Check the prediction time for a single sample
 t=time.time()
 
 dist_pickle = {}
-dist_pickle["svc"] = svc
+dist_pickle["svc"] = clf
 dist_pickle["scaler"] = X_scaler
 dist_pickle["orient"] = orient
 dist_pickle["pix_per_cell"] = pix_per_cell
