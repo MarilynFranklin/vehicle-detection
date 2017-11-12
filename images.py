@@ -5,8 +5,6 @@ import os
 import matplotlib.image as mpimg
 from pipeline import ProcessImages
 
-process_images = ProcessImages()
-
 def processTestImages(input_files='./test_images/*.jpg', output_folder='./'):
     images = glob.glob(input_files)
 
@@ -16,6 +14,7 @@ def processTestImages(input_files='./test_images/*.jpg', output_folder='./'):
         name = "test_images/{fname!s}".format(**locals())
         new_name = "test_images_output/{fname!s}".format(**locals())
         img = mpimg.imread(name)
+        process_images = ProcessImages()
         image = process_images.run_pipeline(img, save_image=(True), image_prefix=prefix)
         mpimg.imsave(new_name, image)
 

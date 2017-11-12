@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from lesson_functions import *
 from scipy.ndimage.measurements import label
+import collections
 
 dist_pickle = pickle.load( open("svc_pickle.p", "rb" ) )
 svc = dist_pickle["svc"]
@@ -19,13 +20,14 @@ spatial_size = dist_pickle["spatial_size"]
 hist_bins = dist_pickle["hist_bins"]
 
 class Pipeline():
-    def __init__(self, image, save_image=False, image_prefix='', scale=1.5,
-            heat_threshold=3):
+    def __init__(self, image, heatmaps, save_image=False, image_prefix='', scale=1.5,
+            heat_threshold=2):
         self.image = image
         self.save_image = save_image
         self.image_prefix = image_prefix
         self.scale = scale
         self.heat_threshold = heat_threshold
+        self.heatmaps = heatmaps
 
         self.save('original.jpg', self.image)
 
@@ -45,8 +47,9 @@ class Pipeline():
 
     def run(self):
         settings = [
-                { 'ystart': 400, 'ystop': 460, 'scale': .5 },
-                { 'ystart': 400, 'ystop': 656, 'scale': 1.5 }
+                { 'ystart': 400, 'ystop': 464, 'scale': .5 },
+                { 'ystart': 432, 'ystop': 624, 'scale': 1.5 },
+                { 'ystart': 400, 'ystop': 656, 'scale': 2 }
         ]
         boxes = []
         for index, config in enumerate(settings):
@@ -59,10 +62,13 @@ class Pipeline():
             self.save(fname, out_img)
 
         heat = np.zeros_like(self.image[:,:,0]).astype(np.float)
-        heat = add_heat(heat, boxes)
+        current_heatmap = add_heat(heat, boxes)
+        self.heatmaps.append(current_heatmap)
+        heat = sum(self.heatmaps)
 
         # Apply threshold to help remove false positives
-        heat = apply_threshold(heat, self.heat_threshold)
+        thresh = len(self.heatmaps) + 1
+        heat = apply_threshold(heat, thresh)
 
         # Visualize the heatmap when displaying
         heatmap = np.clip(heat, 0, 255)
@@ -86,12 +92,13 @@ class Pipeline():
         return draw_img
 
 class ProcessImages():
-    def __init__(self, scale=1.5, heat_threshold=3):
+    def __init__(self, scale=1.5, heat_threshold=2):
       self.scale = scale
       self.heat_threshold = heat_threshold
+      self.heatmaps = collections.deque(maxlen=15)
 
     def run_pipeline(self, image, save_image=False, image_prefix=''):
-        pipeline = Pipeline(image, save_image, image_prefix, self.scale,
+        pipeline = Pipeline(image, self.heatmaps, save_image, image_prefix, self.scale,
                 self.heat_threshold)
         result = pipeline.run()
 
