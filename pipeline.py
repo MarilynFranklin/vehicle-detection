@@ -48,7 +48,7 @@ class Pipeline():
     def run(self):
         settings = [
                 { 'ystart': 400, 'ystop': 464, 'scale': .5 },
-                { 'ystart': 432, 'ystop': 624, 'scale': 1.5 },
+                { 'ystart': 400, 'ystop': 656, 'scale': 1.5 },
                 { 'ystart': 400, 'ystop': 656, 'scale': 2 }
         ]
         boxes = []
