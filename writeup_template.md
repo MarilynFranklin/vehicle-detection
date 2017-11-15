@@ -42,8 +42,8 @@ The code for this step is contained in visualize.py.
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![car][examples/car.png]
-![not car][examples/not-car.png]
+![car](examples/car.png)
+![not car](examples/not-car.png)
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
@@ -51,18 +51,18 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 
 # Car
-![Original][./examples/features/car.jpg]
-![YCrCb][./examples/features/car-YCrCb.jpg]
-![Channel 1 - HOG][./examples/features/car-hog-1.jpg]
-![Channel 2 - HOG][./examples/features/car-hog-2.jpg]
-![Channel 3 - HOG][./examples/features/car-hog-3.jpg]
+![Original](./examples/features/car.jpg)
+![YCrCb](./examples/features/car-YCrCb.jpg)
+![Channel 1 - HOG](./examples/features/car-hog-1.jpg)
+![Channel 2 - HOG](./examples/features/car-hog-2.jpg)
+![Channel 3 - HOG](./examples/features/car-hog-3.jpg)
 
 # Not Car
-![Original][./examples/features/not-car.jpg]
-![YCrCb][./examples/features/not-car-YCrCb.jpg]
-![Channel 1 - HOG][./examples/features/not-car-hog-1.jpg]
-![Channel 2 - HOG][./examples/features/not-car-hog-2.jpg]
-![Channel 3 - HOG][./examples/features/not-car-hog-3.jpg]
+![Original](./examples/features/not-car.jpg)
+![YCrCb](./examples/features/not-car-YCrCb.jpg)
+![Channel 1 - HOG](./examples/features/not-car-hog-1.jpg)
+![Channel 2 - HOG](./examples/features/not-car-hog-2.jpg)
+![Channel 3 - HOG](./examples/features/not-car-hog-3.jpg)
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
@@ -92,17 +92,17 @@ Ultimately, I picked the scale and overlap through trial and error.
 
 I searched for small cars using a scale of .5 from 400-464, and I searched for larger cars with scale 1.5 and 2 from 400-656.
 
-![Scale - .5][./output_images/test6/find-cars-0.jpg]
-![Scale - 1.5][./output_images/test6/find-cars-1.jpg]
-![Scale - 2][./output_images/test6/find-cars-2.jpg]
+![Scale - .5](./output_images/test6/find-cars-0.jpg)
+![Scale - 1.5](./output_images/test6/find-cars-1.jpg)
+![Scale - 2](./output_images/test6/find-cars-2.jpg)
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 I searched on three scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![][./output_images/test4/boxes.jpg]
-![][./output_images/test5/boxes.jpg]
-![][./output_images/test6/boxes.jpg]
+![](./output_images/test4/boxes.jpg)
+![](./output_images/test5/boxes.jpg)
+![](./output_images/test6/boxes.jpg)
 
 ### Video Implementation
 
@@ -123,34 +123,34 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ### Here are six frames and their corresponding heatmaps:
 
 ###### Frame 1
-![][./output_images/series/1/find-cars.jpg]
-![][./output_images/series/1/heatmap.jpg]
+![](./output_images/series/1/find-cars.jpg)
+![](./output_images/series/1/heatmap.jpg)
 
 ###### Frame 2
-![][./output_images/series/2/find-cars.jpg]
-![][./output_images/series/2/heatmap.jpg]
+![](./output_images/series/2/find-cars.jpg)
+![](./output_images/series/2/heatmap.jpg)
 
 ###### Frame 3
-![][./output_images/series/3/find-cars.jpg]
-![][./output_images/series/3/heatmap.jpg]
+![](./output_images/series/3/find-cars.jpg)
+![](./output_images/series/3/heatmap.jpg)
 
 ###### Frame 4
-![][./output_images/series/4/find-cars.jpg]
-![][./output_images/series/4/heatmap.jpg]
+![](./output_images/series/4/find-cars.jpg)
+![](./output_images/series/4/heatmap.jpg)
 
 ###### Frame 5
-![][./output_images/series/5/find-cars.jpg]
-![][./output_images/series/5/heatmap.jpg]
+![](./output_images/series/5/find-cars.jpg)
+![](./output_images/series/5/heatmap.jpg)
 
 ###### Frame 6
-![][./output_images/series/6/find-cars.jpg]
-![][./output_images/series/6/heatmap.jpg]
+![](./output_images/series/6/find-cars.jpg)
+![](./output_images/series/6/heatmap.jpg)
 
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![Labels][./output_images/series/6/labels.jpg]
+![Labels](./output_images/series/6/labels.jpg)
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![Bounding Boxes][./output_images/series/6/boxes.jpg]
+![Bounding Boxes](./output_images/series/6/boxes.jpg)
 
 
 ---
