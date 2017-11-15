@@ -25,18 +25,18 @@ The goals / steps of this project are the following:
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
+### Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 You're reading it!
 
-###Histogram of Oriented Gradients (HOG)
+### Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
 The code for this step is contained in visualize.py.
 
@@ -64,11 +64,11 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 ![Channel 2 - HOG](./examples/features/not-car-hog-2.jpg)
 ![Channel 3 - HOG](./examples/features/not-car-hog-3.jpg)
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 I tried various combinations of parameters and found that 9 HOG orientations, with 8 pixels per cell and 2 cells per block performed well on my initial sample of 1000 images. So, I decided to stick with those parameters and train with all of the data.
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 The code for this step is contained in classify.py and in line 53-101 of lesson_functions.py.
 
@@ -80,9 +80,9 @@ I wanted to use `predict_proba` to threshold data in my pipeline, so I also used
 
 My final test accuracy was 0.9907.
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 The final code for this step is contained in lesson_functions.py (find_cars function, lines 283-349) and pipeline.py (run function, lines 49-62).
 
@@ -96,7 +96,7 @@ I searched for small cars using a scale of .5 from 400-464, and I searched for l
 ![Scale - 1.5](./output_images/test6/find-cars-1.jpg)
 ![Scale - 2](./output_images/test6/find-cars-2.jpg)
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 I searched on three scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
@@ -106,11 +106,11 @@ I searched on three scales using YCrCb 3-channel HOG features plus spatially bin
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 Here's a [link to my video result](./project_output6.mp4)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 The code for this is in pipeline.py (lines 64-78), and lesson_functions.py (find_cars function, lines 338-341).
 
@@ -155,9 +155,9 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Initially, I ran into issues with trying to detect cars that were far away and ones that were up close. To fix this, I tested with several different scales and ultimately used 3 different windows to find cars.
 
